@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+</head>
+<body>
+    <h2>Employee Details</h2>
+
+    {% for e in emp %}
+    <p>Employee ID: {{ e.id }}</p>
+    <p>Name: {{ e.name }}</p>
+    <p>Salary: {{ e.salary }}</p>
+    <hr>
+    {% endfor %}
+
+</body>
+</html>

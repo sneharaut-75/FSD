@@ -1,0 +1,97 @@
+from flask import Flask
+import psycopg2
+
+app = Flask(__name__)
+
+def db_connect():
+    return psycopg2.connect(
+        dbname="library",
+        user="postgres",
+        password="root",
+        host="localhost",
+        port="5432"
+    )
+
+@app.route('/create_table')
+def create_table():
+    try:
+        conn = db_connect()
+        cur = conn.cursor()
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS books (
+                bid SERIAL PRIMARY KEY,
+                title VARCHAR(100),
+                author VARCHAR(100),
+                price INT
+            )
+        """)
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return "Books Table Created Successfully!"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+@app.route('/insert_records')
+def insert_books():
+    try:
+        conn = db_connect()
+        cur = conn.cursor()
+
+        books = [
+            ("Python Basics", "John Smith", 350),
+            ("Flask Development", "David Miller", 450),
+            ("SQL for Beginners", "Anita Sharma", 300),
+            ("Web Development", "Robert Brown", 500),
+            ("Data Science", "Priya Patil", 600)
+        ]
+
+        cur.executemany(
+            "INSERT INTO books (title, author, price) VALUES (%s, %s, %s)",
+            books
+        )
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return "Records inserted successfully in Books table!"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+@app.route('/display_books')
+def display_books():
+    try:
+        conn = db_connect()
+        cur = conn.cursor()
+
+        cur.execute("SELECT title, author, price FROM books")
+        books = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        book_list = "<h2>Books List</h2>"
+
+        for book in books:
+            book_list += (
+                f"Title: {book[0]}, "
+                f"Author: {book[1]}, "
+                f"Price: ₹{book[2]}<br>"
+            )
+
+        return book_list
+
+    except Exception as e:
+        return f"Error: {e}"
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
