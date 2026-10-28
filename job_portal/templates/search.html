@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<p class="menu">
+    <a href="/">Add Job</a> |
+    <a href="/job">View Jobs</a> |
+    <a href="/search">Search</a> |
+    <a href="/apply">Apply</a> |
+    <a href="/applications">Applications</a> |
+    <a href="/update">Update</a> |
+    <a href="/delete">Delete</a>
+</p>
+
+    <h2>Search Jobs</h2>
+
+<form method="POST">
+    Job Title or Location:
+    <input type="text" name="Keyword" value="{{ keyword }}" required>
+    <br><br>
+
+    <input type="submit" value="Search">
+</form>
+
+{% if jobs is not none %}
+    {% if jobs %}
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Job ID</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Salary</th>
+        </tr>
+
+        {% for j in jobs %}
+        <tr>
+            <td>{{ j[0] }}</td>
+            <td>{{ j[1] }}</td>
+            <td>{{ j[2] }}</td>
+            <td>{{ j[3] }}</td>
+            <td>{{ j[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Jobs Found: {{ jobs|length }}</h3>
+    {% else %}
+    <h3>No jobs found for "{{ keyword }}"</h3>
+    {% endif %}
+{% endif %}
+
+</body>
+</html>

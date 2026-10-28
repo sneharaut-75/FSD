@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<p class="menu">
+    <a href="/">Add Job</a> |
+    <a href="/job">View Jobs</a> |
+    <a href="/search">Search</a> |
+    <a href="/apply">Apply</a> |
+    <a href="/applications">Applications</a> |
+    
+</p>
+
+    <h2>Add New Job</h2>
+
+<form method="POST">
+    Job Title:
+    <input type="text" name="Title" required>
+    <br><br>
+
+    Company:
+    <input type="text" name="Company" required>
+    <br><br>
+
+    Location:
+    <input type="text" name="Location" required>
+    <br><br>
+
+    Salary (per month):
+    <input type="number" name="Salary" step="0.01" min="1" required>
+    <br><br>
+
+    <input type="submit" value="Add Job">
+</form>
+
+</body>
+</html>

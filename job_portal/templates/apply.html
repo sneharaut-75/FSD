@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<p class="menu">
+    <a href="/">Add Job</a> |
+    <a href="/job">View Jobs</a> |
+    <a href="/search">Search</a> |
+    <a href="/apply">Apply</a> |
+    <a href="/applications">Applications</a> |
+    <a href="/update">Update</a> |
+    <a href="/delete">Delete</a>
+</p>
+
+    <h2>Apply for a Job</h2>
+
+{% if jobs %}
+<form method="POST">
+    Your Name:
+    <input type="text" name="Applicant_Name" required>
+    <br><br>
+
+    Email:
+    <input type="email" name="Email" required>
+    <br><br>
+
+    Job:
+    <select name="Job_ID" required>
+        {% for j in jobs %}
+        <option value="{{ j[0] }}">{{ j[1] }} - {{ j[2] }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <input type="submit" value="Apply">
+</form>
+{% else %}
+<h3>No jobs available. Please add a job first.</h3>
+{% endif %}
+
+</body>
+</html>
